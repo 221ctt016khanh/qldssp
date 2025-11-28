@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "298917524700",
+    "project_id": "qldssp-b9459",
+    "storage_bucket": "qldssp-b9459.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:298917524700:android:9e10cff0dc9b9eae003019",
+        "android_client_info": {
+          "package_name": "com.example.qldssp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "298917524700-07gdoi0g3jv3o4cle35m7kdcth6cbhcm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1Zn7y3k4i6VKeP_NRHSVSMO2SI_y6CQE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "298917524700-07gdoi0g3jv3o4cle35m7kdcth6cbhcm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
