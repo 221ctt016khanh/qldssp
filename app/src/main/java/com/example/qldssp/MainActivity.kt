@@ -39,6 +39,9 @@ fun navigationScreen() {
    val navController=rememberNavController()
     NavHost(navController, startDestination = "loginScreen"){
         composable("loginScreen") {LoginScreenG(navController) }
-        composable ("mainScreen"){}
+        composable ("ListScreen"){ListScreen()}
+        composable("AddScreen"){
+            AddScreen()
+        }
     }
 }

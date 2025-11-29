@@ -1,7 +1,4 @@
-import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -10,22 +7,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import androidx.credentials.CredentialManager
 import androidx.credentials.GetCredentialRequest
 import androidx.credentials.GetCredentialResponse
-import androidx.credentials.CredentialManagerCallback
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import kotlinx.coroutines.launch
 
 @Composable
@@ -49,6 +38,7 @@ fun LoginScreenG(navController: NavController) {
                         val googleOption = GetGoogleIdOption.Builder()
                             .setServerClientId(webClientId)
                             .setFilterByAuthorizedAccounts(false)
+                            .setAutoSelectEnabled(true)
                             .build()
 
                         val request = GetCredentialRequest.Builder()
@@ -60,15 +50,18 @@ fun LoginScreenG(navController: NavController) {
 
                         val credential = result.credential
                         println(credential)
-                        if (credential is GoogleIdTokenCredential) {
-                            val idToken = credential.idToken
+                        if (credential.type== GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL) {
+                            val googleCred= GoogleIdTokenCredential.createFrom(credential.data)
+                            val idToken = googleCred.idToken
+                            println(idToken)
                             if (idToken != null) {
                                 val firebaseCredential = GoogleAuthProvider.getCredential(idToken, null)
                                 auth.signInWithCredential(firebaseCredential)
                                     .addOnCompleteListener { task ->
                                         if (task.isSuccessful) {
-                                            navController.navigate("main") {
-                                                popUpTo("login") { inclusive = true }
+                                            println("User ID: ${auth.currentUser?.uid}")
+                                            navController.navigate("mainScreen") {
+                                                popUpTo("loginScreen") { inclusive = true }
                                             }
                                         } else {
                                             Toast.makeText(context, "Authentication failed", Toast.LENGTH_SHORT).show()
